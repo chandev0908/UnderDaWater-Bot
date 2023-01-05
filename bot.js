@@ -31,8 +31,9 @@ const client = new Client({
 		GatewayIntentBits.DirectMessages,
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMessageReactions
 	],
-	partials: [Partials.Channel],
+	partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
 
 /**********************************************************************/
@@ -254,7 +255,7 @@ const commandJsonData = [
 			 * 2. Please comment the below (uncommented) line (for guild commands).
 			 */
 
-			Routes.applicationGuildCommands(client_id, test_guild_id),
+			// Routes.applicationGuildCommands(client_id, test_guild_id),
 
 			/**
 			 * Good advice for global commands, you need to execute them only once to update
@@ -262,7 +263,7 @@ const commandJsonData = [
 			 * to ensure they don't get re-deployed on the next restart.
 			 */
 
-			// Routes.applicationCommands(client_id)
+			Routes.applicationCommands(client_id),
 
 			{ body: commandJsonData }
 		);
@@ -297,4 +298,4 @@ for (const folder of triggerFolders) {
 
 // Login into your client application with bot's token.
 
-client.login(token);
+client.login(token || process.env.TOKEN);
